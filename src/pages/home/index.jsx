@@ -1,5 +1,7 @@
-import { Pagination } from 'antd';
+import { Pagination } from "antd";
+
+import { Button } from "../../components/common";
 
 export const Home = () => {
-  return <div>home</div>;
+  return <Button>შესვლა</Button>;
 };
