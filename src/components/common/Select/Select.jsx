@@ -1,5 +1,7 @@
 import { Select as SelectComponent, ConfigProvider } from "antd";
 
+import ArrowDown from "../../../assets/svg/select-arrow.svg?react";
+
 export const Select = ({ options }) => {
   return (
     <ConfigProvider
@@ -20,6 +22,7 @@ export const Select = ({ options }) => {
         size="large"
         placeholder="აირჩიეთ კატეგორია"
         options={options}
+        suffixIcon={<ArrowDown />}
       />
     </ConfigProvider>
   );
