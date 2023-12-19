@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { Tag, BlogCard } from "../../components/common";
+import {
+  Tag,
+  BlogCard,
+  LoadingSpinner,
+  ErrorText,
+} from "../../components/common";
+
 import styles from "./style.module.scss";
 
 const tagsData = [
@@ -13,10 +19,9 @@ const tagsData = [
 ];
 
 export const Home = () => {
-  const [selectedTags, setSelectedTags] = useState([]);
   const [checked, setChecked] = useState({});
-
   const [blogsData, setBlogsData] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -60,6 +65,18 @@ export const Home = () => {
     }
   };
 
+  // Filter blogsData based on selectedTags
+  const filteredBlogs = blogsData.filter((blog) => {
+    // If no tags are selected, show all blogs
+    if (selectedTags.length === 0) {
+      return true;
+    }
+    // Check if the blog has at least one selected tag
+    return blog.categories.some((category) =>
+      selectedTags.includes(category.title)
+    );
+  });
+
   return (
     <div className={styles["container"]}>
       <header className={styles["container__header"]}>
@@ -85,18 +102,24 @@ export const Home = () => {
           ))}
         </div>
         <div className={styles["container__main--blogs"]}>
-          {blogsData.map((blog) => (
-            <BlogCard
-              key={blog.id}
-              id={blog.id}
-              title={blog.title}
-              author={blog.author}
-              description={blog.description}
-              publishDate={blog.publish_date}
-              categories={blog.categories}
-              imgSrc={blog.image}
-            />
-          ))}
+          {error ? (
+            <ErrorText>{error.message}</ErrorText>
+          ) : loading ? (
+            <LoadingSpinner />
+          ) : (
+            filteredBlogs.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                id={blog.id}
+                title={blog.title}
+                author={blog.author}
+                description={blog.description}
+                publishDate={blog.publish_date}
+                categories={blog.categories}
+                imgSrc={blog.image}
+              />
+            ))
+          )}
         </div>
       </main>
     </div>
