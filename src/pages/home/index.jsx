@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Tag } from "../../components/common/Tag/Tag";
+import { useState, useEffect } from "react";
+
+import { Tag, BlogCard } from "../../components/common";
 import styles from "./style.module.scss";
 
 const tagsData = [
@@ -14,6 +15,38 @@ const tagsData = [
 export const Home = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [checked, setChecked] = useState({});
+
+  const [blogsData, setBlogsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://api.blog.redberryinternship.ge/api/blogs",
+          {
+            headers: {
+              Authorization:
+                "Bearer 2900fbe4a255805225cd115cf0734090b28b05477bc9b63eeae88e32ca19b7f6",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+        setBlogsData(data?.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (tag) => {
     // Toggle the checked state for the clicked tag
@@ -38,17 +71,33 @@ export const Home = () => {
         />
       </header>
       <main className={styles["container__main"]}>
-        {tagsData.map(({ text, textColor, tagColor }) => (
-          <Tag
-            tagColor={tagColor}
-            textColor={textColor}
-            key={text}
-            onClick={() => handleChange(text)}
-            checked={checked[text]}
-          >
-            {text}
-          </Tag>
-        ))}
+        <div className={styles["container__main--tags"]}>
+          {tagsData.map(({ text, textColor, tagColor }) => (
+            <Tag
+              tagColor={tagColor}
+              textColor={textColor}
+              key={text}
+              onClick={() => handleChange(text)}
+              checked={checked[text]}
+            >
+              {text}
+            </Tag>
+          ))}
+        </div>
+        <div className={styles["container__main--blogs"]}>
+          {blogsData.map((blog) => (
+            <BlogCard
+              key={blog.id}
+              id={blog.id}
+              title={blog.title}
+              author={blog.author}
+              description={blog.description}
+              publishDate={blog.publish_date}
+              categories={blog.categories}
+              imgSrc={blog.image}
+            />
+          ))}
+        </div>
       </main>
     </div>
   );
