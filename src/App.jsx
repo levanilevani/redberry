@@ -2,7 +2,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {MainLayout, SeccondaryLayout} from './layouts';
 import {Home, Blog} from './pages';
 
-import './assets/styles/global.scss';
+import "./assets/styles/global.scss";
 
 function App() {
   return (
