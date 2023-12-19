@@ -1,11 +1,11 @@
-import { ConfigProvider, Tag as TagComponent } from "antd";
+import { Tag, ConfigProvider } from "antd";
+const { CheckableTag: CheckableTagComponent } = Tag;
 
-export const Tag = ({
-  tagColor,
+export const CheckableTag = ({
+  backgroundColor,
   textColor,
+  tag,
   children,
-  small,
-  checked,
   ...otherProps
 }) => {
   return (
@@ -13,26 +13,26 @@ export const Tag = ({
       theme={{
         token: {
           borderRadiusSM: 30,
-          marginXS: 0,
+          marginXS: 24,
+          colorPrimary: backgroundColor,
         },
       }}
     >
-      <TagComponent
+      <CheckableTagComponent
         style={{
           color: textColor,
           fontFamily: "FiraGo",
           fontSize: "12px",
           fontWeight: 500,
           lineHeight: "16px",
-          padding: small ? "6px 16px" : "8px 16px",
-          border: checked ? "1px solid #000" : "",
-          cursor: "pointer",
+          padding: "8px 16px",
+          overflowX: "auto",
         }}
-        color={tagColor}
+        key={tag}
         {...otherProps}
       >
         {children}
-      </TagComponent>
+      </CheckableTagComponent>
     </ConfigProvider>
   );
 };

@@ -1,0 +1,36 @@
+@import "../../assets/styles/variables";
+
+.container {
+  background: #f3f2fa;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 64px 0;
+
+    &--title {
+      color: #1a1a1f;
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 72px;
+    }
+
+    &--img {
+      width: 624px;
+    }
+  }
+
+  &__main {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    max-width: 684px;
+    margin: $mxAuto;
+    text-align: center;
+    margin-bottom: 64px;
+  }
+}
