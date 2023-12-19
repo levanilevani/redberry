@@ -1,0 +1,28 @@
+@import '../../assets/styles/variables';
+
+.layout {
+  &__header {
+    padding: 28px 76px;
+    background: $white--1;
+    border-bottom: 1px solid $white--2;
+
+    > div {
+      margin: $mxAuto;
+      max-width: $maxWidth;
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__outlet {
+    padding: 28px 76px;
+
+    > div {
+      margin: $mxAuto;
+      max-width: $maxWidth;
+    }
+  }
+}

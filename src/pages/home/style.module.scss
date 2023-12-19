@@ -1,0 +1,49 @@
+@import "../../assets/styles/variables";
+
+.container {
+  background: #f3f2fa;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 64px 0;
+
+    &--title {
+      color: #1a1a1f;
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 72px;
+    }
+
+    &--img {
+      width: 624px;
+    }
+  }
+
+  &__main {
+    user-select: none;
+    margin: $mxAuto;
+
+    &--tags {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      width: 100%;
+      max-width: 690px;
+      margin: $mxAuto;
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+
+    &--blogs {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      column-gap: 32px;
+      row-gap: 56px;
+      margin-bottom: 68px;
+      justify-content: center;
+    }
+  }
+}
