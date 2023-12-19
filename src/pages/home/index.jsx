@@ -1,7 +1,16 @@
-import { Pagination } from 'antd';
+import { Pagination } from "antd";
 
-import { Button } from '../../components/common';
+import { Button } from "../../components/common";
 
 export const Home = () => {
-  return <Button>შესვლა</Button>;
+  return (
+    <Select
+      options={[
+        {
+          value: "1",
+          label: "Not Identified",
+        },
+      ]}
+    />
+  );
 };
