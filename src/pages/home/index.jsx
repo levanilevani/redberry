@@ -1,7 +1,5 @@
-import { Pagination } from 'antd';
-
-import { Button } from '../../components/common';
+import {BlogCard} from "../../components/common/BlogCard/BlogCard.jsx";
 
 export const Home = () => {
-  return <Button>შესვლა</Button>;
+  return <BlogCard/>
 };
