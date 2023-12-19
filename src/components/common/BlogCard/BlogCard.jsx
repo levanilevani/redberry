@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import ArrowUp from '../../../assets/svg/arrow-up.svg?react'
 
 import styles from './styles.module.scss'
+import {Tag} from "../Tag/Tag.jsx";
 
 export const BlogCard = ({imgSrc, author, publishDate, title, categories, description, id}) => {
   return (
@@ -27,12 +28,11 @@ export const BlogCard = ({imgSrc, author, publishDate, title, categories, descri
         <h1 className={styles['card__title']}>{title}</h1>
 
         <Flex gap={16}>
-          {categories.map((category) =>
-            <div style={{
-              width: 85,
-              height: 27,
-              background: 'red'
-            }}>{category.title}</div>
+          {categories?.map((category) =>
+            <Tag key={category.id}
+                 tagColor={category.background_color}
+                 textColor={category.text_color}
+            >{category.name}</Tag>
           )}
         </Flex>
 
