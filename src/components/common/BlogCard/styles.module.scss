@@ -1,0 +1,73 @@
+@import "../../../assets/styles/variables";
+
+.card {
+  max-width: 408px;
+  min-height: 620px;
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+
+  &__img {
+    position: relative;
+    width: 100%;
+    height: 328px;
+
+    > img {
+      border-radius: 14px;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+    }
+  }
+
+
+  &__author {
+    color: $black--1;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  &__publish-date {
+    color: $gray--3;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  &__title {
+    color: $black--1;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+
+  &__description {
+    color: $gray--2;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+  }
+
+  &__path {
+    width: fit-content;
+    color: $blue--1;
+    font-family: FiraGO;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover {
+      color: $blue--1;
+    }
+  }
+}
