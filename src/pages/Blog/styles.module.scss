@@ -1,9 +1,10 @@
-@import '../../assets/styles/variables';
+@import "../../assets/styles/variables";
 
 .blog {
   max-width: 720px;
   width: 100%;
   margin: $mxAuto;
+  margin-bottom: 68px;
 
   display: flex;
   flex-direction: column;
@@ -13,6 +14,11 @@
     position: relative;
     max-width: 720px;
     min-height: 327px;
+
+    &--button {
+      position: absolute;
+      left: -200px;
+    }
 
     > img {
       width: 100%;
@@ -30,7 +36,8 @@
     line-height: 20px;
   }
 
-  &__publish-date, &__author-email {
+  &__publish-date,
+  &__author-email {
     color: $gray--3;
     font-size: 12px;
     font-weight: 400;
