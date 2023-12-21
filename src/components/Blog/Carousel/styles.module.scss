@@ -14,38 +14,11 @@
       font-weight: 700;
       line-height: 40px;
     }
+
     &--buttons {
       display: flex;
       align-items: center;
       gap: 24px;
     }
   }
-}
-
-.d1,
-.d2,
-.d3,
-.d4,
-.d5 {
-  width: 400px;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.d1 {
-  background: gray;
-}
-.d2 {
-  background: red;
-}
-.d3 {
-  background: blue;
-}
-.d4 {
-  background: yellow;
-}
-.d5 {
-  background: yellowgreen;
 }
