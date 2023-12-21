@@ -1,0 +1,22 @@
+{
+  "components": {
+    "Modal": {
+      "contentBg": "rgb(255, 255, 255)",
+      "titleColor": "rgb(26, 26, 31)",
+      "colorIcon": "rgb(26, 26, 31)",
+      "titleFontSize": 24,
+      "titleLineHeight": 2,
+      "fontHeight": 22,
+      "fontSize": 14,
+      "lineHeight": 1.5,
+      "margin": 0,
+      "marginXS": 0,
+      "padding": 20,
+      "paddingLG": 20,
+      "borderRadiusLG": 12,
+      "borderRadiusSM": 12,
+      "fontFamily": "FiraGO",
+      "fontWeightStrong": 700
+    }
+  }
+}
