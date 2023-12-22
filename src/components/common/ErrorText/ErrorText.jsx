@@ -6,6 +6,7 @@ export const ErrorText = ({ children }) => {
       type="danger"
       style={{
         fontSize: 40,
+        textAlign: "center",
       }}
     >
       {children}

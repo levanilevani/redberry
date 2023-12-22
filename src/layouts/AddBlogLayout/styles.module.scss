@@ -1,0 +1,26 @@
+@import "../../assets/styles/variables";
+
+.layout {
+  &--icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 28px 76px;
+
+    background: $white--1;
+    border-bottom: 1px solid $white--2;
+  }
+
+  &__main {
+    padding: 28px 76px;
+
+    display: flex;
+    align-items: flex-start;
+
+    &--outlet {
+      max-width: $maxWidth--secondary;
+      margin: $mxAuto;
+      width: 100%;
+    }
+  }
+}
