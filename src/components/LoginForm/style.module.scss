@@ -1,0 +1,27 @@
+.title,
+.label,
+.error {
+  color: #1a1a1f;
+  font-family: FiraGO;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  margin: 20px 0 24px 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.error {
+  color: #ea1919;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}

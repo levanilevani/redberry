@@ -1,12 +1,13 @@
-@import '../../assets/styles/variables';
+@import "../../assets/styles/variables";
 
 .layout {
   &__header {
     &--icon {
       display: flex;
       align-self: center;
-      justify-content: center;
-      padding: 28px 0;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 76px;
 
       background: $white--1;
       border-bottom: 1px solid $white--2;
@@ -18,10 +19,6 @@
 
     display: flex;
     align-items: flex-start;
-
-    &--back {
-      width: fit-content;
-    }
 
     &--outlet {
       max-width: $maxWidth--secondary;

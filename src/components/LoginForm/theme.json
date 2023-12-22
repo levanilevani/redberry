@@ -1,0 +1,21 @@
+{
+  "components": {
+    "Form": {
+      "labelColor": "rgb(26, 26, 31)",
+      "colorText": "rgb(26, 26, 31)",
+      "colorPrimary": "rgb(93, 55, 243)",
+      "colorError": "rgb(234, 25, 25)",
+      "colorBorder": "rgb(228, 227, 235)",
+      "itemMarginBottom": 8,
+      "controlHeightLG": 44,
+      "fontSizeLG": 14,
+      "fontFamily": "FiraGo",
+      "lineWidth": 0,
+      "labelHeight": 32
+    }
+  },
+  "token": {
+    "colorPrimary": "#5d37f3",
+    "colorInfo": "#5d37f3"
+  }
+}
