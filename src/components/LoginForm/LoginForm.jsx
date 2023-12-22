@@ -51,7 +51,6 @@ export const LoginForm = () => {
       <Form
         layout="vertical"
         onFinish={onFinish}
-        autoComplete="off"
         requiredMark={false}
         form={form}
       >

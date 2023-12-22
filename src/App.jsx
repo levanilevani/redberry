@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { GlobalContext } from "./context/globalContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { MainLayout, SecondaryLayout } from "./layouts";
-import { Home, Blog } from "./pages";
+import ProtectedRoute from "./routes/ProtectedRoute";
+
+import { MainLayout, SecondaryLayout, AddBlogLayout } from "./layouts";
+import { Home, Blog, AddBlog } from "./pages";
 
 import "./assets/styles/global.scss";
 
@@ -17,8 +19,10 @@ function App() {
           <Route path="/blog/:id" element={<Blog />} />
         </Route>
 
-        <Route element={<SecondaryLayout />}>
-          <Route path="/secondary" element={<di>test secondary layout</di>} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AddBlogLayout />}>
+            <Route path="/add-blog" element={<AddBlog />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
