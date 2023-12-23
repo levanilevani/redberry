@@ -1,0 +1,25 @@
+@import "../../../assets/styles/global.scss";
+
+.label {
+  font-family: $family--primary;
+  color: $black--1;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+
+  &::after {
+    content: "*";
+    position: absolute;
+    font-size: 16px;
+    left: 59px;
+  }
+}
+
+.left {
+  &::after {
+    content: "*";
+    position: absolute;
+    font-size: 16px;
+    left: 80px;
+  }
+}
