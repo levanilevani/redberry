@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 
     &--ul {
       margin-left: 20px;
@@ -24,17 +24,27 @@
     column-gap: 24px;
   }
 
-  &--email {
+  &__email {
     width: 100%;
     max-width: 288px;
     align-self: flex-start;
+    margin-bottom: 8px;
+
+    &--error {
+      width: 100%;
+      max-width: 260px;
+      font-family: $family--primary;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 20px;
+    }
   }
 
   &--button {
     width: 100%;
     max-width: 288px;
     align-self: flex-end;
-    margin-top: 30px;
+    margin-top: 40px;
   }
 }
 

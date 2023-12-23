@@ -36,9 +36,7 @@ export const SecondaryLayout = () => {
       </header>
 
       <main className={styles["layout__main"]}>
-        <section className={styles["layout__main--outlet"]}>
-          <Outlet />
-        </section>
+        <Outlet />
       </main>
     </div>
   );

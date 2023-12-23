@@ -1,7 +1,7 @@
 {
   "components": {
     "Form": {
-      "itemMarginBottom": 8
+      "itemMarginBottom": 0
     }
   }
 }

@@ -1,12 +1,12 @@
 import { ConfigProvider, Input as InputComponent } from "antd";
 
-export const Input = ({ allValid, placeholder }) => (
+export const Input = ({ checkValidation, placeholder }) => (
   <ConfigProvider
     theme={{
       token: {
-        colorPrimary: allValid ? "#14D81C" : "#5D37F3",
-        colorBorder: allValid && "#14D81C",
-        colorBgContainer: allValid && "#FAF2F3",
+        colorPrimary: checkValidation ? "#14D81C" : "#5D37F3",
+        colorBorder: checkValidation && "#14D81C",
+        colorBgContainer: checkValidation && "#FAF2F3",
         borderRadiusLG: 8,
         marginLG: 8,
       },

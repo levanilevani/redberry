@@ -1,6 +1,6 @@
 import { isWordsValid } from "./isWordsValid";
 
-export const geoWordsValidator = (_, value) => {
+export const authorFieldValidator = (_, value) => {
   // Validation logic for Georgian Symbols
   const isGeorgianValid = /^[ა-ჰ\s]+$/.test(value);
 

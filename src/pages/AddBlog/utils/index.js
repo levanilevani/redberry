@@ -1,2 +1,6 @@
 export { isWordsValid } from "./isWordsValid";
-export { geoWordsValidator } from "./geoWordsValidator";
+export { authorFieldValidator } from "./authorFieldValidator";
+export { titleFieldValidator } from "./titleFieldValidator";
+export { descriptionFieldValidator } from "./descriptionFieldValidator";
+export { emailFieldValidator } from "./emailFieldValidator";
+export { endsWithRedberryGeRegex } from "./emailFieldValidator";

@@ -1,10 +1,21 @@
-import { useState, useEffect } from "react";
-import { ConfigProvider, Form } from "antd";
+import { useState, useEffect, useContext } from "react";
+import { GlobalContext } from "../../context/globalContext";
+
+import { ConfigProvider, Flex, Form } from "antd";
 
 import { Button } from "../../components/common";
 import { Label, Input, TextArea } from "../../components";
 
-import { isWordsValid, geoWordsValidator } from "./utils";
+import {
+  isWordsValid,
+  authorFieldValidator,
+  titleFieldValidator,
+  descriptionFieldValidator,
+  emailFieldValidator,
+  endsWithRedberryGeRegex,
+} from "./utils";
+
+import ErrorCircle from "../../assets/svg/error-circle.svg?react";
 
 import Theme from "./theme.json";
 
@@ -13,13 +24,19 @@ import styles from "./styles.module.scss";
 export const AddBlog = () => {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState(false);
+  const { setOpenSuccessModal } = useContext(GlobalContext);
   const [validationStatus, setValidationStatus] = useState({
     author: "base",
     authorWord: "base",
     georgianAuthor: "base",
     title: "base",
     description: "base",
-    allValid: false,
+    authorValid: false,
+    authorWordValid: false,
+    authorGeorgianValid: false,
+    titleValid: false,
+    descriptionValid: false,
+    emailValid: false,
   });
 
   useEffect(() => {
@@ -28,59 +45,62 @@ export const AddBlog = () => {
 
   const onFinish = (values) => {
     console.log(values);
+
+    setOpenSuccessModal(true);
   };
 
-  const onValuesChange = (_, values) => {
-    // Validation logic for Author
-    if (values.author) {
-      const isAuthorValid = values.author.trim().length >= 4;
-      setValidationStatus((prev) => ({
-        ...prev,
-        author: isAuthorValid ? "valid" : "inValid",
-      }));
-    }
+  // checking each field's text and added some validation styles
+  const checkForValid = (result) => (result ? "valid" : "inValid");
 
-    // Validation logic for Words (example rule: at least two words)
+  const onValuesChange = (_, values) => {
+    // Validation form email's Field
+    if (values.email) {
+      if (endsWithRedberryGeRegex.test(values.email)) {
+        setValidationStatus((prev) => ({ ...prev, emailValid: true }));
+      }
+    }
+    // Validation  for description's Text
     if (values.description) {
       const isDescriptionWordsValid = isWordsValid(values.description);
       setValidationStatus((prev) => ({
         ...prev,
-        description: isDescriptionWordsValid ? "valid" : "inValid",
+        descriptionValid: true,
+        description: checkForValid(isDescriptionWordsValid),
       }));
     }
 
+    // Validation logic for Title's Text
     if (values.title) {
       const isTitleWordsValid = isWordsValid(values.title);
       setValidationStatus((prev) => ({
         ...prev,
-        title: isTitleWordsValid ? "valid" : "inValid",
+        titleValid: true,
+        title: checkForValid(isTitleWordsValid),
       }));
     }
 
+    // Validation logic for Author's Text
     if (values.author) {
+      const isAuthorValid = values.author.trim().length >= 4;
+      setValidationStatus((prev) => ({
+        ...prev,
+        authorValid: true,
+        author: checkForValid(isAuthorValid),
+      }));
+
       const isAuthorWordsValid = isWordsValid(values.author);
       setValidationStatus((prev) => ({
         ...prev,
-        authorWord: isAuthorWordsValid ? "valid" : "inValid",
+        authorWordValid: true,
+        authorWord: checkForValid(isAuthorWordsValid),
       }));
-    }
-    // Validation logic for Georgian Symbols
-    if (values.author) {
+
       const isGeorgianValid = /^[ა-ჰ\s]+$/.test(values.author);
       setValidationStatus((prev) => ({
         ...prev,
-        georgianAuthor: isGeorgianValid ? "valid" : "inValid",
+        authorGeorgianValid: true,
+        georgianAuthor: checkForValid(isGeorgianValid),
       }));
-    }
-
-    if (
-      validationStatus.author === "valid" &&
-      validationStatus.authorWord === "valid" &&
-      validationStatus.georgianAuthor === "valid" &&
-      validationStatus.title === "valid" &&
-      validationStatus.description === "valid"
-    ) {
-      setValidationStatus((prev) => ({ ...prev, allValid: true }));
     }
   };
 
@@ -101,13 +121,14 @@ export const AddBlog = () => {
         }}
       >
         <div className={styles["form--grid"]}>
+          {/* Author Field */}
           <Form.Item
             name="author"
             rules={[
               {
                 required: true,
                 min: 4,
-                validator: geoWordsValidator,
+                validator: authorFieldValidator,
                 message: "",
               },
             ]}
@@ -116,7 +137,11 @@ export const AddBlog = () => {
               <Label>ავტორი</Label>
               <Input
                 placeholder="შეიყვანეთ ავტორი"
-                allValid={validationStatus.allValid}
+                checkValidation={
+                  validationStatus.authorValid &&
+                  validationStatus.authorWordValid &&
+                  validationStatus.authorGeorgianValid
+                }
               />
               <ul className={styles["form__inputWrapper--ul"]}>
                 <li className={styles[validationStatus.author]}>
@@ -131,13 +156,15 @@ export const AddBlog = () => {
               </ul>
             </div>
           </Form.Item>
+
+          {/* Title Field */}
           <Form.Item
             name="title"
             rules={[
               {
                 required: true,
                 min: 2,
-                // validator: geoWordsValidator,
+                validator: titleFieldValidator,
                 message: "",
               },
             ]}
@@ -146,7 +173,7 @@ export const AddBlog = () => {
               <Label>სათური</Label>
               <Input
                 placeholder="შეიყვანეთ სათაური"
-                allValid={validationStatus.allValid}
+                checkValidation={validationStatus.titleValid}
               />
 
               <p className={styles[validationStatus.title]}>
@@ -155,13 +182,15 @@ export const AddBlog = () => {
             </div>
           </Form.Item>
         </div>
+
+        {/* Description Field */}
         <Form.Item
           name="description"
           rules={[
             {
               required: true,
               min: 2,
-              // validator: geoWordsValidator,
+              validator: descriptionFieldValidator,
               message: "",
             },
           ]}
@@ -170,7 +199,7 @@ export const AddBlog = () => {
             <Label>აღწერა</Label>
             <TextArea
               placeholder="შეიყვანეთ აღწერა"
-              allValid={validationStatus.allValid}
+              allValid={validationStatus.descriptionValid}
             />
             <p className={styles[validationStatus.description]}>
               მინიმუმ 2 სიმბოლო
@@ -178,30 +207,41 @@ export const AddBlog = () => {
           </div>
         </Form.Item>
 
+        {/* Email Field */}
         <Form.Item
           name="email"
           rules={[
             {
               required: true,
-              // validator: geoWordsValidator,
-              message: "",
+              validator: emailFieldValidator,
+              message: (
+                <Flex gap={8} align="center">
+                  <ErrorCircle />
+                  <p className={styles["form__email--error"]}>
+                    მეილი უნდა მთავრდებოდეს @redberry.ge-ით
+                  </p>
+                </Flex>
+              ),
             },
           ]}
         >
           <div
-            className={`${styles["form__inputWrapper"]} ${styles["form--email"]}`}
+            className={`${styles["form__inputWrapper"]} ${styles["form__email"]}`}
           >
             <Label left>ელ-ფოსტა</Label>
-            <Input placeholder="Example@redberry.ge" />
+            <Input
+              placeholder="Example@redberry.ge"
+              checkValidation={validationStatus.emailValid}
+            />
           </div>
         </Form.Item>
 
         <Form.Item shouldUpdate className={styles["form--button"]}>
           {() => (
             <Button
+              block
               type="primary"
               htmlType="submit"
-              block
               disabled={
                 !clientReady ||
                 !form.isFieldsTouched(true) ||
