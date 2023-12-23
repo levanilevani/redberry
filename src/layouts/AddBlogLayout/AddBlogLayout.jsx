@@ -22,29 +22,29 @@ export const AddBlogLayout = () => {
         </Link>
       </div>
       <main className={styles["layout__main"]}>
-        <section className={styles["layout__main--outlet"]}>
-          <Modal
-            open={openSuccessModal}
-            handleOk={() => setOpenSuccessModal(false)}
-          >
-            <Flex vertical gap={48} justify="center">
-              <Flex vertical gap={16} align="center" style={{ marginTop: 20 }}>
-                <SuccessCircle />
-                <p className={styles["layout--modalText"]}>
-                  ჩანაწი წარმატებით დაემატა
-                </p>
-              </Flex>
-              <Button
-                onClick={() => {
-                  navigate("/");
-                  setOpenSuccessModal(false);
-                }}
-                className={styles["layout--modalBtn"]}
-              >
-                მთავარ გვერდზე დაბრუნება
-              </Button>
+        <Modal
+          open={openSuccessModal}
+          handleOk={() => setOpenSuccessModal(false)}
+        >
+          <Flex vertical gap={48} justify="center">
+            <Flex vertical gap={16} align="center" style={{ marginTop: 20 }}>
+              <SuccessCircle />
+              <p className={styles["layout--modalText"]}>
+                ჩანაწი წარმატებით დაემატა
+              </p>
             </Flex>
-          </Modal>
+            <Button
+              onClick={() => {
+                navigate("/");
+                setOpenSuccessModal(false);
+              }}
+              className={styles["layout--modalBtn"]}
+            >
+              მთავარ გვერდზე დაბრუნება
+            </Button>
+          </Flex>
+        </Modal>
+        <section className={styles["layout__main--outlet"]}>
           <Outlet />
         </section>
       </main>

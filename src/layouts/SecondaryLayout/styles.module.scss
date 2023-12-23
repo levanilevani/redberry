@@ -16,7 +16,9 @@
 
   &__main {
     padding: 28px 76px;
-    display: flex;
-    align-items: flex-start;
+
+    &--outlet {
+      width: 100%;
+    }
   }
 }
