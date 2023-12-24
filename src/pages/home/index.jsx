@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
 import {
   Tag,
@@ -19,9 +20,9 @@ const tagsData = [
 ];
 
 export const Home = () => {
-  const [checked, setChecked] = useState({});
   const [blogsData, setBlogsData] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [checked, setChecked] = useLocalStorage("checked", {});
+  const [selectedTags, setSelectedTags] = useLocalStorage("selectedTags", []);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

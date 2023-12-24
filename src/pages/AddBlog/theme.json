@@ -2,6 +2,9 @@
   "components": {
     "Form": {
       "itemMarginBottom": 0
+    },
+    "Upload": {
+      "borderRadiusLG": 12
     }
   }
 }

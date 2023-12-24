@@ -23,3 +23,10 @@
     left: 80px;
   }
 }
+
+.noStyle {
+  &::after {
+    content: unset;
+  }
+  margin-bottom: 8px;
+}

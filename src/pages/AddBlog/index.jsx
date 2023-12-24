@@ -1,7 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { GlobalContext } from "../../context/globalContext";
 
-import { ConfigProvider, Flex, Form } from "antd";
+import { ConfigProvider, Flex, Form, Upload } from "antd";
+
+import FolderAdd from "../../assets/svg/folder-add.svg?react";
 
 import { Button } from "../../components/common";
 import { Label, Input, TextArea } from "../../components";
@@ -103,6 +105,14 @@ export const AddBlog = () => {
       }));
     }
   };
+  const normFile = (e) => {
+    // console.log("Upload event:", e);
+    // if (Array.isArray(e)) {
+    //   return e;
+    // }
+    console.log(e?.file);
+    return e?.fileList;
+  };
 
   return (
     <ConfigProvider theme={Theme}>
@@ -120,6 +130,36 @@ export const AddBlog = () => {
           author: "",
         }}
       >
+        {/* Image Field */}
+        <Form.Item required noStyle>
+          <Label noStyle>ატვირთეთ ფოტო</Label>
+          <Form.Item
+            required
+            name="image"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+            noStyle
+          >
+            <Upload.Dragger
+              className={styles["form--file"]}
+              name="files"
+              maxCount={1}
+              listType="picture"
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+            >
+              <div className={styles["form__fileContainer"]}>
+                <FolderAdd className={styles["form__fileContainer--svg"]} />
+                <p className={styles["form__folderAdd"]}>
+                  ჩააგდეთ ფაილი აქ ან
+                  <span className={styles["form__folderAdd--text"]}>
+                    აირჩიეთ ფაილი
+                  </span>
+                </p>
+              </div>
+            </Upload.Dragger>
+          </Form.Item>
+        </Form.Item>
+
         <div className={styles["form--grid"]}>
           {/* Author Field */}
           <Form.Item
