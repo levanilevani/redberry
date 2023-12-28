@@ -1,7 +1,7 @@
 @import "../../assets/styles/variables";
 
 .container {
-  background: #f3f2fa;
+  background: $gray--1;
 
   &__header {
     display: flex;
@@ -10,7 +10,7 @@
     margin: 64px 0;
 
     &--title {
-      color: #1a1a1f;
+      color: $black--1;
       font-size: 64px;
       font-weight: 700;
       line-height: 72px;
