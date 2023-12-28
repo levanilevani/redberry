@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from "react";
-import { GlobalContext } from "../../context/globalContext";
+import { useState, useEffect, useContext } from 'react';
+import { GlobalContext } from '../../context/globalContext';
 
-import { ConfigProvider, Flex, Form, Upload } from "antd";
+import { ConfigProvider, Flex, Form, Upload, DatePicker } from 'antd';
 
-import FolderAdd from "../../assets/svg/folder-add.svg?react";
+import FolderAdd from '../../assets/svg/folder-add.svg?react';
 
-import { Button } from "../../components/common";
-import { Label, Input, TextArea } from "../../components";
+import { Button } from '../../components/common';
+import { Label, Input, TextArea } from '../../components';
 
 import {
   isWordsValid,
@@ -15,28 +15,30 @@ import {
   descriptionFieldValidator,
   emailFieldValidator,
   endsWithRedberryGeRegex,
-} from "./utils";
+} from './utils';
 
-import ErrorCircle from "../../assets/svg/error-circle.svg?react";
+import ErrorCircle from '../../assets/svg/error-circle.svg?react';
 
-import Theme from "./theme.json";
+import Theme from './theme.json';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
+import CategoriesSelect from '../../components/AddBlog/CategoriesSelect/CategoriesSelect';
 
 export const AddBlog = () => {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState(false);
+  const [tags, setTags] = useState(undefined);
   const [imageUrl, setImageUrl] = useState({
-    binary: "",
+    binary: '',
     fileInfo: null,
   });
   const { setOpenSuccessModal } = useContext(GlobalContext);
   const [validationStatus, setValidationStatus] = useState({
-    author: "base",
-    authorWord: "base",
-    georgianAuthor: "base",
-    title: "base",
-    description: "base",
+    author: 'base',
+    authorWord: 'base',
+    georgianAuthor: 'base',
+    title: 'base',
+    description: 'base',
     authorValid: false,
     authorWordValid: false,
     authorGeorgianValid: false,
@@ -49,6 +51,10 @@ export const AddBlog = () => {
     setClientReady(true);
   }, []);
 
+  const handleTagChange = (value) => {
+    setTags(value);
+  };
+
   const onFinish = (values) => {
     console.log(values);
 
@@ -56,7 +62,7 @@ export const AddBlog = () => {
   };
 
   // checking each field's text and added some validation styles
-  const checkForValid = (result) => (result ? "valid" : "inValid");
+  const checkForValid = (result) => (result ? 'valid' : 'inValid');
 
   const onValuesChange = (_, values) => {
     // Validation form email's Field
@@ -119,7 +125,7 @@ export const AddBlog = () => {
 
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
+    reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   };
 
@@ -133,48 +139,49 @@ export const AddBlog = () => {
       fileInfo: info.file.name,
     }));
   };
+  console.log(tags);
 
   return (
     <ConfigProvider theme={Theme}>
       <Form
         form={form}
-        layout="vertical"
+        layout='vertical'
         requiredMark={false}
         onFinish={onFinish}
         onValuesChange={onValuesChange}
-        className={styles["form"]}
+        className={styles['form']}
         initialValues={{
-          title: "",
-          description: "",
-          email: "",
-          author: "",
+          title: '',
+          description: '',
+          email: '',
+          author: '',
         }}
       >
         {/* Image Field */}
-        <div className={styles["container"]}>
+        <div className={styles['container']}>
           <Label noStyle>ატვირთეთ ფოტო</Label>
           <Form.Item
-            name="image"
-            valuePropName="filelist"
+            name='image'
+            valuePropName='filelist'
             getValueFromEvent={normFile}
             noStyle
             required
           >
             <Upload.Dragger
-              className={styles["container--file"]}
+              className={styles['container--file']}
               maxCount={1}
-              listType="picture"
+              listType='picture'
               onChange={handleChange}
-              name="files"
-              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+              name='files'
+              action='https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188'
             >
-              <div className={styles["container__fileContainer"]}>
+              <div className={styles['container__fileContainer']}>
                 <FolderAdd
-                  className={styles["container__fileContainer--svg"]}
+                  className={styles['container__fileContainer--svg']}
                 />
-                <p className={styles["container__folderAdd"]}>
+                <p className={styles['container__folderAdd']}>
                   ჩააგდეთ ფაილი აქ ან
-                  <span className={styles["container__folderAdd--text"]}>
+                  <span className={styles['container__folderAdd--text']}>
                     აირჩიეთ ფაილი
                   </span>
                 </p>
@@ -183,30 +190,30 @@ export const AddBlog = () => {
           </Form.Item>
         </div>
 
-        <div className={styles["form--grid"]}>
+        <div className={styles['form--grid']}>
           {/* Author Field */}
           <Form.Item
-            name="author"
+            name='author'
             rules={[
               {
                 required: true,
                 min: 4,
                 validator: authorFieldValidator,
-                message: "",
+                message: '',
               },
             ]}
           >
-            <div className={styles["form__inputWrapper"]}>
-              <Label>ავტორი</Label>
+            <div className={styles['form__inputWrapper']}>
+              <Label>ავტორი *</Label>
               <Input
-                placeholder="შეიყვანეთ ავტორი"
+                placeholder='შეიყვანეთ ავტორი'
                 checkValidation={
                   validationStatus.authorValid &&
                   validationStatus.authorWordValid &&
                   validationStatus.authorGeorgianValid
                 }
               />
-              <ul className={styles["form__inputWrapper--ul"]}>
+              <ul className={styles['form__inputWrapper--ul']}>
                 <li className={styles[validationStatus.author]}>
                   მინიმუმ 4 სიმბოლო
                 </li>
@@ -222,20 +229,20 @@ export const AddBlog = () => {
 
           {/* Title Field */}
           <Form.Item
-            name="title"
+            name='title'
             rules={[
               {
                 required: true,
                 min: 2,
                 validator: titleFieldValidator,
-                message: "",
+                message: '',
               },
             ]}
           >
-            <div className={styles["form__inputWrapper"]}>
-              <Label>სათური</Label>
+            <div className={styles['form__inputWrapper']}>
+              <Label>სათური *</Label>
               <Input
-                placeholder="შეიყვანეთ სათაური"
+                placeholder='შეიყვანეთ სათაური'
                 checkValidation={validationStatus.titleValid}
               />
 
@@ -248,20 +255,20 @@ export const AddBlog = () => {
 
         {/* Description Field */}
         <Form.Item
-          name="description"
+          name='description'
           rules={[
             {
               required: true,
               min: 2,
               validator: descriptionFieldValidator,
-              message: "",
+              message: '',
             },
           ]}
         >
-          <div className={styles["form__inputWrapper"]}>
-            <Label>აღწერა</Label>
+          <div className={styles['form__inputWrapper']}>
+            <Label>აღწერა *</Label>
             <TextArea
-              placeholder="შეიყვანეთ აღწერა"
+              placeholder='შეიყვანეთ აღწერა'
               allValid={validationStatus.descriptionValid}
             />
             <p className={styles[validationStatus.description]}>
@@ -270,17 +277,39 @@ export const AddBlog = () => {
           </div>
         </Form.Item>
 
+        <Flex direction='row' justify='space-between' align='center'>
+          <Form.Item required name={'date'}>
+            <div className={styles['form__inputWrapper']}>
+              <Label>გამოქვეყნების თარიღი *</Label>
+              <DatePicker
+                style={{
+                  width: 288,
+                  height: 44,
+                  borderRadius: 8,
+                }}
+              />
+            </div>
+          </Form.Item>
+
+          <Form.Item required name={'select'} style={{ minWidth: 288 }}>
+            <div className={styles['form__inputWrapper']}>
+              <Label>კატეგორია *</Label>
+              <CategoriesSelect handleChange={handleTagChange} />
+            </div>
+          </Form.Item>
+        </Flex>
+
         {/* Email Field */}
         <Form.Item
-          name="email"
+          name='email'
           rules={[
             {
               required: true,
               validator: emailFieldValidator,
               message: (
-                <Flex gap={8} align="center">
+                <Flex gap={8} align='center'>
                   <ErrorCircle />
-                  <p className={styles["form__email--error"]}>
+                  <p className={styles['form__email--error']}>
                     მეილი უნდა მთავრდებოდეს @redberry.ge-ით
                   </p>
                 </Flex>
@@ -289,26 +318,26 @@ export const AddBlog = () => {
           ]}
         >
           <div
-            className={`${styles["form__inputWrapper"]} ${styles["form__email"]}`}
+            className={`${styles['form__inputWrapper']} ${styles['form__email']}`}
           >
-            <Label left>ელ-ფოსტა</Label>
+            <Label left>ელ-ფოსტა *</Label>
             <Input
-              placeholder="Example@redberry.ge"
+              placeholder='Example@redberry.ge'
               checkValidation={validationStatus.emailValid}
             />
           </div>
         </Form.Item>
 
-        <Form.Item shouldUpdate className={styles["form--button"]}>
+        <Form.Item shouldUpdate className={styles['form--button']}>
           {() => (
             <Button
               block
-              type="primary"
-              htmlType="submit"
+              type='primary'
+              htmlType='submit'
               disabled={
                 !clientReady ||
                 !form.isFieldsTouched(true) ||
-                form.getFieldValue("image")?.length === 0 ||
+                form.getFieldValue('image')?.length === 0 ||
                 !!form.getFieldsError().filter(({ errors }) => errors.length)
                   .length
               }
