@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { GlobalContext } from "../../context/globalContext";
 
-import { ConfigProvider, Flex, Form } from "antd";
+import { ConfigProvider, Flex, Form, Upload } from "antd";
+
+import FolderAdd from "../../assets/svg/folder-add.svg?react";
 
 import { Button } from "../../components/common";
-import { Label, Input, TextArea, ImageUploader } from "../../components";
+import { Label, Input, TextArea } from "../../components";
 
 import {
   isWordsValid,
@@ -48,7 +50,7 @@ export const AddBlog = () => {
   }, []);
 
   const onFinish = (values) => {
-    console.log(values.image);
+    console.log(values);
 
     // setOpenSuccessModal(true);
   };
@@ -108,7 +110,29 @@ export const AddBlog = () => {
     }
   };
 
-  console.log(imageUrl);
+  const normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+
+  const handleChange = async (info) => {
+    const binaryData = await new Promise((resolve) => {
+      getBase64(info.file.originFileObj, (data) => resolve(data));
+    });
+    setImageUrl((prev) => ({
+      ...prev,
+      binary: binaryData,
+      fileInfo: info.file.name,
+    }));
+  };
 
   return (
     <ConfigProvider theme={Theme}>
@@ -127,27 +151,50 @@ export const AddBlog = () => {
         }}
       >
         {/* Image Field */}
-        <Form.Item required noStyle name={"image"}>
-          <ImageUploader
-            fieldName="image"
-            fileName="files"
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-          />
-        </Form.Item>
+        <div className={styles["container"]}>
+          <Label noStyle>ატვირთეთ ფოტო</Label>
+          <Form.Item
+            name="image"
+            valuePropName="filelist"
+            getValueFromEvent={normFile}
+            noStyle
+            required
+          >
+            <Upload.Dragger
+              className={styles["container--file"]}
+              maxCount={1}
+              listType="picture"
+              onChange={handleChange}
+              name="files"
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+            >
+              <div className={styles["container__fileContainer"]}>
+                <FolderAdd
+                  className={styles["container__fileContainer--svg"]}
+                />
+                <p className={styles["container__folderAdd"]}>
+                  ჩააგდეთ ფაილი აქ ან
+                  <span className={styles["container__folderAdd--text"]}>
+                    აირჩიეთ ფაილი
+                  </span>
+                </p>
+              </div>
+            </Upload.Dragger>
+          </Form.Item>
+        </div>
 
         <div className={styles["form--grid"]}>
           {/* Author Field */}
           <Form.Item
             name="author"
-            // rules={[
-            //   {
-            //     required: true,
-            //     min: 4,
-            //     validator: authorFieldValidator,
-            //     message: "",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                min: 4,
+                validator: authorFieldValidator,
+                message: "",
+              },
+            ]}
           >
             <div className={styles["form__inputWrapper"]}>
               <Label>ავტორი</Label>
@@ -176,14 +223,14 @@ export const AddBlog = () => {
           {/* Title Field */}
           <Form.Item
             name="title"
-            // rules={[
-            //   {
-            //     required: true,
-            //     min: 2,
-            //     validator: titleFieldValidator,
-            //     message: "",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                min: 2,
+                validator: titleFieldValidator,
+                message: "",
+              },
+            ]}
           >
             <div className={styles["form__inputWrapper"]}>
               <Label>სათური</Label>
@@ -202,14 +249,14 @@ export const AddBlog = () => {
         {/* Description Field */}
         <Form.Item
           name="description"
-          // rules={[
-          //   {
-          //     required: true,
-          //     min: 2,
-          //     validator: descriptionFieldValidator,
-          //     message: "",
-          //   },
-          // ]}
+          rules={[
+            {
+              required: true,
+              min: 2,
+              validator: descriptionFieldValidator,
+              message: "",
+            },
+          ]}
         >
           <div className={styles["form__inputWrapper"]}>
             <Label>აღწერა</Label>
@@ -226,20 +273,20 @@ export const AddBlog = () => {
         {/* Email Field */}
         <Form.Item
           name="email"
-          // rules={[
-          //   {
-          //     required: true,
-          //     validator: emailFieldValidator,
-          //     message: (
-          //       <Flex gap={8} align="center">
-          //         <ErrorCircle />
-          //         <p className={styles["form__email--error"]}>
-          //           მეილი უნდა მთავრდებოდეს @redberry.ge-ით
-          //         </p>
-          //       </Flex>
-          //     ),
-          //   },
-          // ]}
+          rules={[
+            {
+              required: true,
+              validator: emailFieldValidator,
+              message: (
+                <Flex gap={8} align="center">
+                  <ErrorCircle />
+                  <p className={styles["form__email--error"]}>
+                    მეილი უნდა მთავრდებოდეს @redberry.ge-ით
+                  </p>
+                </Flex>
+              ),
+            },
+          ]}
         >
           <div
             className={`${styles["form__inputWrapper"]} ${styles["form__email"]}`}
@@ -258,12 +305,13 @@ export const AddBlog = () => {
               block
               type="primary"
               htmlType="submit"
-              // disabled={
-              //   !clientReady ||
-              //   !form.isFieldsTouched(true) ||
-              //   !!form.getFieldsError().filter(({ errors }) => errors.length)
-              //     .length
-              // }
+              disabled={
+                !clientReady ||
+                !form.isFieldsTouched(true) ||
+                form.getFieldValue("image")?.length === 0 ||
+                !!form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
             >
               გამოქვეყნება
             </Button>

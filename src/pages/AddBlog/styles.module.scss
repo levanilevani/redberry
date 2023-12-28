@@ -68,3 +68,65 @@
 .inValid {
   color: $errorPrimary;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &--file {
+    margin-bottom: 24px;
+  }
+
+  &__fileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    &--svg {
+      margin-top: 32px;
+    }
+  }
+
+  &__folderAdd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: $black--1;
+    margin-bottom: 32px;
+
+    font-family: $family--primary;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+
+    &--text {
+      text-decoration: underline;
+      font-weight: 500;
+    }
+  }
+}
+
+.image__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid $gray--1;
+
+  border-radius: 12px;
+  background: $gray--1;
+
+  &--text {
+    color: $black--1;
+
+    font-family: $family--primary;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+}
