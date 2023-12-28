@@ -1,8 +1,10 @@
+@import "../../assets/styles/global.scss";
+
 .title,
 .label,
 .error {
-  color: #1a1a1f;
-  font-family: FiraGO;
+  color: $black--1;
+  font-family: $family--primary;
 }
 
 .title {
@@ -20,7 +22,7 @@
 }
 
 .error {
-  color: #ea1919;
+  color: $errorPrimary;
   font-size: 12px;
   font-weight: 400;
   line-height: 20px;

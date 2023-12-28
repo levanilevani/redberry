@@ -7,10 +7,13 @@ export const GlobalContext = createContext({
   isLoggedIn: false,
   setIsLoggedIn: () => {},
   pending: true,
+  openSuccessModal: false,
+  setOpenSuccessModal: () => {},
 });
 
 export const GlobalProvider = ({ children }) => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage("isLoggedIn", false);
   const [pending, setPending] = useState(true);
 
@@ -30,6 +33,8 @@ export const GlobalProvider = ({ children }) => {
         isLoggedIn,
         setIsLoggedIn,
         pending,
+        openSuccessModal,
+        setOpenSuccessModal,
       }}
     >
       {children}
