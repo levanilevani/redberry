@@ -1,8 +1,6 @@
-@import "../../assets/styles/variables";
+@import '../../assets/styles/variables';
 
 .container {
-  background: $gray--1;
-
   &__header {
     display: flex;
     align-items: center;
@@ -23,7 +21,6 @@
 
   &__main {
     user-select: none;
-    margin: $mxAuto;
 
     &--tags {
       display: flex;

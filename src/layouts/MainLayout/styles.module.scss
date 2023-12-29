@@ -1,4 +1,4 @@
-@import "../../assets/styles/variables";
+@import '../../assets/styles/variables';
 
 .layout {
   &__header {
@@ -19,6 +19,7 @@
 
   &__outlet {
     padding: 40px 76px 68px;
+    background: $gray--1;
 
     > div {
       margin: $mxAuto;

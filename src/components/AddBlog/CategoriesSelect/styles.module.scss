@@ -1,0 +1,34 @@
+.select {
+  & :global(.ant-select-selection-overflow) {
+    height: 39px;
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+
+  & :global(.ant-select-selector) {
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    height: 1px;
+    border-radius: 100%;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
