@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import dayjs from 'dayjs';
 import { GlobalContext } from '../../context/globalContext';
 
 import { ConfigProvider, Flex, Form, Upload, DatePicker } from 'antd';
@@ -27,7 +28,7 @@ import CategoriesSelect from '../../components/AddBlog/CategoriesSelect/Categori
 export const AddBlog = () => {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState(false);
-  const [tags, setTags] = useState(undefined);
+  const [tags, setTags] = useState([]);
   const [imageUrl, setImageUrl] = useState({
     binary: '',
     fileInfo: null,
@@ -53,12 +54,40 @@ export const AddBlog = () => {
 
   const handleTagChange = (value) => {
     setTags(value);
+    form.setFieldsValue({ select: value });
   };
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const formData = new FormData();
+      formData.append('author', values.author);
+      formData.append('title', values.title);
+      formData.append('description', values.description);
+      formData.append('date', values.date);
+      formData.append('select', values.select);
+      formData.append('email', values.email);
+      formData.append('image', values.image[0].originFileObj);
 
-    // setOpenSuccessModal(true);
+      const response = await fetch(
+        'https://api.blog.redberryinternship.ge/api/blogs',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer 2900fbe4a255805225cd115cf0734090b28b05477bc9b63eeae88e32ca19b7f6`,
+          },
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        setOpenSuccessModal(true);
+      } else {
+        // Handle error
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   // checking each field's text and added some validation styles
@@ -133,13 +162,7 @@ export const AddBlog = () => {
     const binaryData = await new Promise((resolve) => {
       getBase64(info.file.originFileObj, (data) => resolve(data));
     });
-    setImageUrl((prev) => ({
-      ...prev,
-      binary: binaryData,
-      fileInfo: info.file.name,
-    }));
   };
-  console.log(tags);
 
   return (
     <ConfigProvider theme={Theme}>
@@ -150,12 +173,6 @@ export const AddBlog = () => {
         onFinish={onFinish}
         onValuesChange={onValuesChange}
         className={styles['form']}
-        initialValues={{
-          title: '',
-          description: '',
-          email: '',
-          author: '',
-        }}
       >
         {/* Image Field */}
         <div className={styles['container']}>
@@ -287,6 +304,10 @@ export const AddBlog = () => {
                   height: 44,
                   borderRadius: 8,
                 }}
+                onChange={(_, dateString) =>
+                  form.setFieldsValue({ date: dateString })
+                }
+                format={'YYYY.MM.DD'}
               />
             </div>
           </Form.Item>
@@ -337,7 +358,7 @@ export const AddBlog = () => {
               disabled={
                 !clientReady ||
                 !form.isFieldsTouched(true) ||
-                form.getFieldValue('image')?.length === 0 ||
+                form.getFieldValue('image').length === 0 ||
                 !!form.getFieldsError().filter(({ errors }) => errors.length)
                   .length
               }
